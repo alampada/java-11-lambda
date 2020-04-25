@@ -1,0 +1,44 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+
+dependencies {
+    implementation 'com.amazonaws:aws-lambda-java-core:1.2.0'
+
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.6.2'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.6.2'
+    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.15.0'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.3.3'
+    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '3.3.3'
+
+
+
+}
+
+test {
+    useJUnitPlatform()
+}
+
+task buildZip(type: Zip) {
+    from compileJava
+    from processResources
+    into('lib') {
+        from configurations.runtimeClasspath
+    }
+    archiveFileName = 'sample-lambda.zip'
+}
+
+build.dependsOn buildZip

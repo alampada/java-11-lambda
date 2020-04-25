@@ -1,0 +1,15 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: Example lambda
+Resources:
+  function:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: build/distributions/sample-lambda.zip
+      Handler: com.ala.example.LambdaHandler
+      Runtime: java11
+      Description: Sample Java function
+      MemorySize: 128
+      Timeout: 10
+      Policies:
+        - AWSLambdaBasicExecutionRole
